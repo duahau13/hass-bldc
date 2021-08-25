@@ -12,6 +12,7 @@ Mục đích sử dụng vi điều khiển esp8266 tạo xung PMW điều tốc
 * Rotary encoder
 * Ổn áp 7805
 * Tụ 35V 470mF
+* Trở 100K, 22K và 3,3K
 * Terminal 2P
 * Công tắc
 * Header 3P, 5P kèm dây ra
@@ -20,3 +21,7 @@ Mục đích sử dụng vi điều khiển esp8266 tạo xung PMW điều tốc
 
 ## Sơ đồ đấu nối
 ![BLDC_bb](https://user-images.githubusercontent.com/56484469/130810372-d9b9a644-7801-400e-a0a4-fc8e5b5ac903.jpg)
+
+## Thành phẩm
+
+## Báo pin qua Voltage divider
