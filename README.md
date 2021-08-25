@@ -10,6 +10,7 @@ Mục đích sử dụng vi điều khiển esp8266 tạo xung PMW điều tốc
 * Motor BLDC PWM (chạy 12-24V)
 * D1 mini
 * Rotary encoder
+* Ổn áp 7805
 * Tụ 35V 470mF
 * Terminal 2P
 * Công tắc
