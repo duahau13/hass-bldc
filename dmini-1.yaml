@@ -1,0 +1,124 @@
+esphome:
+  name: dmini-1
+  platform: ESP8266
+  board: d1_mini
+  on_boot:
+    priority: 600
+    then:
+      lambda: !lambda |-
+        id(fan_1).speed = 30;
+        id(my_encoder).set_value(30);
+          
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "2a5cde85886f24676cd7dd8a14da7926"
+
+wifi:
+  ssid: "apollo"
+  password: "chuotbodt"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Dmini-1 Fallback Hotspot"
+    password: "ylK8qXH7Luw7"
+
+captive_portal:
+
+
+fan:
+  - platform: speed
+    output: pwm_output
+    name: "Fan 1"
+    id: fan_1
+  
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: D4
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Rotary Switch"
+    internal: true
+    on_press:
+       then:
+        - lambda: !lambda |-
+            id(my_encoder).set_value(id(fan_1).speed);
+        - fan.toggle: fan_1
+
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+  - platform: rotary_encoder
+    name: "Rotary Encoder"
+    id: my_encoder
+    pin_a: D2
+    pin_b: D3
+    resolution: 1
+    min_value: 0
+    max_value: 100
+    filters:
+      - or:
+        - debounce: 0.1s
+        - delta: 10
+      - lambda: |-
+          if (x < 0.0) return 0.0;
+          if (x > 100.0) return 100.0;
+          return x;
+    on_value:
+      then:
+        lambda: !lambda |-
+          if(id(fan_1).state) {
+            id(fan_1).speed = x;
+            id(pwm_output).set_level(x/100);
+          }
+
+  - platform: adc
+    pin: A0
+    name: "Lifepo4 4S"
+    id: battery_voltage
+    update_interval: 30s  
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    icon: mdi:battery-medium
+    filters:
+      - multiply: 4.95
+      - calibrate_polynomial:
+         degree: 3
+         datapoints:
+          - 0.000 -> 0.0
+          - 10.00 -> 0.0
+          - 10.46 -> 10.0
+          - 10.92 -> 20.0
+          - 11.38 -> 30.0
+          - 11.84 -> 40.0
+          - 12.30 -> 50.0
+          - 12.76 -> 60.0
+          - 13.22 -> 70.0
+          - 13.68 -> 80.0
+          - 14.14 -> 90.0
+          - 14.37 -> 95.0
+          - 14.60 -> 100.0
+      - lambda: |-
+          if (x <= 100) {
+            return x;
+          } else {
+            return 100;
+          }
+  - platform: uptime
+    name: Uptime Sensor
+    id: uptime_sensor
+    update_interval: 60s
+    
+              
+output:
+  - platform: esp8266_pwm
+    pin: D1
+    frequency: 15000 Hz
+    id: pwm_output
