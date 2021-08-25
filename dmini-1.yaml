@@ -5,6 +5,7 @@ esphome:
   on_boot:
     priority: 600
     then:
+      # Set initial speed on boot up
       lambda: !lambda |-
         id(fan_1).speed = 30;
         id(my_encoder).set_value(30);
@@ -20,8 +21,8 @@ ota:
   password: "2a5cde85886f24676cd7dd8a14da7926"
 
 wifi:
-  ssid: "apollo"
-  password: "chuotbodt"
+  ssid: #Input your Wifi ID
+  password: # Input Wifi password 
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
@@ -78,7 +79,8 @@ sensor:
             id(fan_1).speed = x;
             id(pwm_output).set_level(x/100);
           }
-
+          
+  # Log battery voltage through a divider with R1 = 100KOhm, R2 = 22K + 3.3K 
   - platform: adc
     pin: A0
     name: "Lifepo4 4S"
@@ -116,7 +118,7 @@ sensor:
     id: uptime_sensor
     update_interval: 60s
     
-              
+# PWM output to BLDC              
 output:
   - platform: esp8266_pwm
     pin: D1
