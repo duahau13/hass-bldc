@@ -19,3 +19,4 @@ Mục đích sử dụng vi điều khiển esp8266 tạo xung PMW điều tốc
 * Dây điện
 
 ## Sơ đồ đấu nối
+![BLDC_bb](https://user-images.githubusercontent.com/56484469/130810372-d9b9a644-7801-400e-a0a4-fc8e5b5ac903.jpg)
