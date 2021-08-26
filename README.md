@@ -21,8 +21,18 @@ Sau đó, tích hợp vào Home Assistant và Homekit để điều khiển bằ
 * Dây điện
 
 ## Sơ đồ đấu nối
-![BLDC_bb2_web](https://user-images.githubusercontent.com/56484469/130883368-7ead0648-21ab-42b3-a52a-61d2d835921c.png)
+![BLDC_bb3](https://user-images.githubusercontent.com/56484469/130901478-66d3aef1-01fe-4480-96f7-ca965baab95d.png)
 
+Nguồn cấp vào 12-24V mắc song song tụ 35V 470mF để tăng dòng khi motor khởi động. Nguồn vào IC L7805CV hạ áp xuống 5V cho D1 mini. Rotary encoder lấy chung nguồn 5V.
+
+Đấu dây Encoder vào D1 mini như sau:
+D1 mini | Rotary encoder
+------------ | -------------
+5V | +
+G | GND
+D4 | SW
+D3 | DT
+D2 | CLK
 
 ## Mạch hoàn thành
 
