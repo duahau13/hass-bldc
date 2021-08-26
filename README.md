@@ -11,7 +11,7 @@ Sau đó, tích hợp vào Home Assistant và Homekit để điều khiển bằ
 * Motor BLDC PWM (chạy 12-24V)
 * D1 mini
 * Rotary encoder
-* Hạ áp 5V L7805CV
+* IC ổn áp L7805CV
 * Tụ 35V 470mF
 * Trở 100K, 22K và 3,3K (xem phần voltage divider)
 * Terminal 2P
