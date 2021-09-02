@@ -6,10 +6,10 @@ esphome:
   name: dmini-1
   platform: ESP8266
   board: d1_mini
+  # Set initial speed at 30%
   on_boot:
     priority: 600
     then:
-      # Set initial speed on boot up
       lambda: !lambda |-
         id(fan_1).speed = 30;
         id(my_encoder).set_value(30);
@@ -25,8 +25,8 @@ ota:
   password: "2a5cde85886f24676cd7dd8a14da7926"
 
 wifi:
-  ssid: #Input your Wifi ID
-  password: # Input Wifi password 
+  ssid: ${wifi_ssid}
+  password: ${wifi_password}
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
@@ -35,20 +35,21 @@ wifi:
 
 captive_portal:
 
-
+# Fan component
 fan:
   - platform: speed
     output: pwm_output
-    name: "Fan 1"
+    name: ${node_friendly_name}
     id: fan_1
-  
+
+# Encoder Button
 binary_sensor:
   - platform: gpio
     pin:
       number: D4
       mode: INPUT_PULLUP
       inverted: true
-    name: "Rotary Switch"
+    name: ${node_friendly_name} Rotary Switch
     internal: true
     on_press:
        then:
@@ -57,8 +58,8 @@ binary_sensor:
         - fan.toggle: fan_1
 
 sensor:
-   - platform: rotary_encoder
-    name: "Rotary Encoder"
+  - platform: rotary_encoder
+    name: ${node_friendly_name} Rotary Encoder
     id: my_encoder
     pin_a: D2
     pin_b: D3
@@ -80,30 +81,59 @@ sensor:
             id(fan_1).speed = x;
             id(pwm_output).set_level(x/100);
           }
-          
-  # Log battery voltage through a divider with R1 = 100KOhm, R2 = 22K + 3.3K 
+  # Measure the voltage divider
   - platform: adc
     pin: A0
-    name: "Lifepo4 4S"
+    name: ${node_friendly_name} Lifepo4 4S
     id: battery_voltage
-    update_interval: 60s  
+    update_interval: 600s
+  # Convert battery voltage to remaining battery percent
   - platform: template
     name: ${node_friendly_name} Battery Level
     device_class: battery
     unit_of_measurement: '%'
     accuracy_decimals: 0
     update_interval: 600s
+    # Working battery voltage from 10.6V to 14.6V
     lambda: |-
       return ((((id(battery_voltage).state)*16.7)-10.6)/4.0)*100;
+
   - platform: uptime
-    name: Uptime Sensor
+    name: ${node_friendly_name} Uptime Sensor
     id: uptime_sensor
-    update_interval: 60s
-  - platform: wifi_signal
-    name: "WiFi Signal"
-    update_interval: 60s
+    update_interval: 600s
+    on_raw_value:
+      then:
+        - text_sensor.template.publish:
+            id: uptime_human
+            state: !lambda |-
+              int seconds = round(id(uptime_sensor).raw_state);
+              int days = seconds / (24 * 3600);
+              seconds = seconds % (24 * 3600);
+              int hours = seconds / 3600;
+              seconds = seconds % 3600;
+              int minutes = seconds /  60;
+              seconds = seconds % 60;
+              return (
+                (days ? String(days) + "d " : "") +
+                (hours ? String(hours) + "h " : "") +
+                (minutes ? String(minutes) + "m " : "") +
+                (String(seconds) + "s")
+              ).c_str();
     
-# PWM output to BLDC              
+  - platform: wifi_signal
+    name: ${node_friendly_name} WiFi Signal
+    id: wifi_sensor
+    update_interval: 600s
+
+# Readable uptime
+text_sensor:
+  - platform: template
+    name: ${node_friendly_name} Uptime
+    id: uptime_human
+    icon: mdi:clock-start
+
+# Output PWM to fan
 output:
   - platform: esp8266_pwm
     pin: D1
