@@ -26,6 +26,7 @@ Sau đó, tích hợp vào Home Assistant và Homekit để điều khiển bằ
 Nguồn cấp vào 12-24V mắc song song tụ 35V 470mF để tăng dòng khi motor khởi động. Nguồn vào IC L7805CV hạ áp xuống 5V cho D1 mini. Rotary encoder lấy chung nguồn 5V.
 
 Đấu dây Encoder vào D1 mini như sau:
+
 D1 mini | Rotary encoder
 ------------ | -------------
 5V | +
@@ -37,3 +38,32 @@ D2 | CLK
 ## Mạch hoàn thành
 
 ## Voltage divider
+esp8266 có chân ADC dùng để đọc các giá trị analog, nên có thể dùng đo điện áp đầu vào. Tuy nhiên, chân ADC chỉ nhận điện áp tối đa 3,3V, do đó cần phải hạ điện áp đầu vào để không làm hỏng MCU, bằng một mạch đơn giản gọi là Voltage divider.
+![voltage_divider_circuit](https://user-images.githubusercontent.com/56484469/131812055-5c3cc9a0-c89b-41bb-a28b-5b16a4de9241.png)
+
+Công thức: Vout = Vin*R2/(R1+R2)
+
+* Vin: điện áp đầu vào (điện áp cần đo)
+* R1: điện trở (Ω)
+* R2: điện trở (Ω)
+* Vout: điện áp đầu ra (vào chân ADC)
+
+Pin Lifepo4 4S có điện áp sạc đầy là 14,6V, điện áp xả cạn là 10,6V => điện áp đầu Vin vào cần theo dõi.
+
+R1 là điện trở 100KΩ, R2 là điện trở 25,3KΩ (nối tiếp điện trở 22KΩ và 3,3KΩ).
+
+Theo công thức tính được điện áp đầu ra Vout = 2,948V
+
+Như vậy hệ số điều chỉnh: Δ1 = 14,6/2,948 = 4,95
+
+Tuy nhiên, đây là hệ số trên lý thuyết, trong thực tế sẽ xê dịch một chút do chất lượng linh kiện, sai số thiết bị đo,... nên cần tinh chỉnh lại khi lắp ráp.
+
+D1 mini có sẵn voltage divider cho ADC, khi cấp điện áp 0-3,3V sẽ được điều chỉnh xuống còn 0-1V => hệ số điều chỉnh Δ2 = 3,3
+
+Cuối cùng, hệ số điều chỉnh: Δ= Δ1 * Δ2 = 4,95 * 3,3 = 16,35
+
+Vout = Vin/16,35 => 14,6/16,35 = 0,89 => đây chính là điện áp cuối cùng mà MCU đo được qua chân ADC
+
+## Nguồn tham khảo
+1. [ESP8266 battery level meter](https://ezcontents.org/esp8266-battery-level-meter)
+2. [Voltage divider: calculator and application](https://www.mischianti.org/2019/06/15/voltage-divider-calculator-and-application/)
