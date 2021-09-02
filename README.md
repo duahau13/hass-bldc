@@ -1,4 +1,4 @@
-# Điều khiển BLDC motor bằng esp8266
+# Điều khiển BLDC PWM motor bằng esp8266
 
 Mục đích sử dụng vi điều khiển esp8266 tạo xung PMW điều tốc các loại motor không chổi than dùng xung PWM, đặc biệt các model chuyên chạy quạt của Nidec có 3 dây (VCC, GND, PWM) rất dễ mua trên các trang bán hàng online như Shopee, Lazada,...
 Sau đó, tích hợp vào Home Assistant và Homekit để điều khiển bằng giọng nói qua Siri.
