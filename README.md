@@ -6,7 +6,7 @@ Cuối cùng tích hợp vào Home Assistant và Apple Homekit để điều khi
 ![516b8f9af2a894ad63a6f6362e2707eb](https://user-images.githubusercontent.com/56484469/130795755-a8e43cad-ace3-4660-a304-ab39391690a2.jpg)
 
 ## Phần mềm
-Code viết dựa trên Esphome, một add-on của Home Assistant nên yêu cầu phải có sẵn Home Assistant và Esphome để compile thành firmware. Nếu không có sẵn Home Assistant, có thể download file .bin rồi flash mạch D1 mini để dùng bình thường (điều khiển bằng nút nhấn vật lý).
+Code viết bằng ngôn ngữ YAML dựa trên [Esphome](https://esphome.io/), một add-on của [Home Assistant](https://home-assistant.io/) nên yêu cầu phải có sẵn Home Assistant và Esphome để compile thành firmware. Nếu không có sẵn Home Assistant, có thể download file .bin rồi flash mạch D1 mini để dùng bình thường (điều khiển bằng nút nhấn vật lý).
 
 ## Vật tư cần thiết
 * Motor BLDC PWM (chạy 12-24V)
@@ -41,6 +41,8 @@ D2 | CLK
 
 ## Mạch hoàn thành
 
+## Viết code
+
 ## Voltage divider
 esp8266 có chân ADC dùng để đọc các giá trị analog, nên có thể dùng đo điện áp đầu vào. Tuy nhiên, ADC chỉ nhận điện áp tối đa 3,3V, do đó cần phải hạ điện áp đầu vào để không làm hỏng MCU, bằng một mạch đơn giản gọi là Voltage divider.
 
@@ -70,5 +72,7 @@ Cuối cùng, hệ số điều chỉnh: Δ= Δ1 * Δ2 = 4,95 * 3,3 = 16,35
 Vout = Vin/16,35 => 14,6/16,35 = 0,89 => đây chính là điện áp cuối cùng mà MCU đo được qua chân ADC
 
 ## Nguồn tham khảo
-1. [ESP8266 battery level meter](https://ezcontents.org/esp8266-battery-level-meter)
-2. [Voltage divider: calculator and application](https://www.mischianti.org/2019/06/15/voltage-divider-calculator-and-application/)
+1. [Esphome Speed Fan](https://esphome.io/components/fan/speed.html)
+2. [Esphome Rotary Encoder](https://esphome.io/components/sensor/rotary_encoder.html)
+3. [ESP8266 battery level meter](https://ezcontents.org/esp8266-battery-level-meter)
+4. [Voltage divider: calculator and application](https://www.mischianti.org/2019/06/15/voltage-divider-calculator-and-application/)
