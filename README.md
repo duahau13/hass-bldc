@@ -42,7 +42,7 @@ esp8266 có chân ADC dùng để đọc các giá trị analog, nên có thể 
 
 ![voltage_divider_circuit](https://user-images.githubusercontent.com/56484469/131812055-5c3cc9a0-c89b-41bb-a28b-5b16a4de9241.png)
 
-> Vout = Vin*R2/(R1+R2)
+``` Vout = Vin*R2/(R1+R2)```
 
 * Vin: điện áp đầu vào (điện áp cần đo)
 * R1: điện trở (Ω)
