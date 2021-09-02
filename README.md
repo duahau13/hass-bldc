@@ -5,7 +5,7 @@ Sau đó, tích hợp vào Home Assistant và Homekit để điều khiển bằ
 
 ![516b8f9af2a894ad63a6f6362e2707eb](https://user-images.githubusercontent.com/56484469/130795755-a8e43cad-ace3-4660-a304-ab39391690a2.jpg)
 
-**Lưu ý:** Code viết dựa trên Esphome, một add-on của Home Assistant nên yêu cầu phải có sẵn Home Assistant và Esphome để compile thành firmware.
+**Lưu ý:** Code viết dựa trên Esphome, một add-on của Home Assistant nên yêu cầu phải có sẵn Home Assistant và Esphome để compile thành firmware. Nếu không có sẵn Home Assistant, có thể download file .bin rồi flash mạch D1 mini để dùng bình thường (điều khiển bằng nút nhấn vật lý).
 
 ## Vật tư cần thiết
 * Motor BLDC PWM (chạy 12-24V)
