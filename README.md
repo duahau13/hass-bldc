@@ -44,7 +44,7 @@ D2 | CLK
 ## Voltage divider
 esp8266 có chân ADC dùng để đọc các giá trị analog, nên có thể dùng đo điện áp đầu vào. Tuy nhiên, ADC chỉ nhận điện áp tối đa 3,3V, do đó cần phải hạ điện áp đầu vào để không làm hỏng MCU, bằng một mạch đơn giản gọi là Voltage divider.
 
-![voltage_divider_circuit](https://user-images.githubusercontent.com/56484469/131812055-5c3cc9a0-c89b-41bb-a28b-5b16a4de9241.png)
+![Impedance_voltage_divider](https://user-images.githubusercontent.com/56484469/131849726-19682202-782d-483e-80d8-ba4b74d56a25.png)
 
 ``` Vout = Vin*R2/(R1+R2) ```
 
