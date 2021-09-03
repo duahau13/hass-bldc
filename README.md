@@ -55,7 +55,7 @@ esp8266 có chân ADC dùng để đọc các giá trị analog, nên có thể 
 * R2: điện trở (Ω)
 * Vout: điện áp đầu ra (vào chân ADC)
 
-Pin Lifepo4 4S có điện áp sạc đầy là 14,6V, điện áp xả cạn là 10,6V => điện áp đầu Vin vào cần theo dõi.
+Pin Lifepo4 4S có điện áp sạc đầy là 14,6V, điện áp xả cạn là 10,6V => điện áp đầu vào Vin cần theo dõi.
 
 R1 là điện trở 100KΩ, R2 là điện trở 25,3KΩ (nối tiếp điện trở 22KΩ và 3,3KΩ).
 
